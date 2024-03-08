@@ -1,0 +1,6 @@
+Architectures: amd64 arm64 armhf
+Components: main
+Suites: trixie
+Uris: http://repo.production.furilabs.com/
+Types: deb
+Signed-By: /var/lib/extrepo/keys/furilabs.asc
