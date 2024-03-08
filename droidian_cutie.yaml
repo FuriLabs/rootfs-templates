@@ -36,17 +36,15 @@ actions:
     chroot: true
     description: install cutie
     packages:
-      - cutie-full
+      - droidian-cutie-full
 
 {{ if eq $variant "phone" }}
   - action: apt
     chroot: true
     description: install packages for the phone variant
     packages:
-      - droidian-quirks-dummy-modemmanager
-      - droidian-quirks-dummy-ofono2mm
       - adaptation-hybris-api{{ $apilevel }}-phone
-      - cutie-phone-full
+      - droidian-cutie-phone
 {{end}}
 
 {{ if eq $version "nightly" }}
@@ -57,10 +55,15 @@ actions:
       - droidian-devtools
       - droidian-quirks-regenerate-ssh-keys
       - adaptation-hybris-devtools
-      - cutie-devtools
 {{end}}
 
-  - action: run
-    description: clean cutie
+  - action: apt
     chroot: true
-    script: scripts/clean-cutie.sh
+    description: install droidian-extras
+    packages:
+      - droidian-extras
+
+  - action: run
+    description: Set up cutie
+    chroot: true
+    script: scripts/setup-cutie.sh
