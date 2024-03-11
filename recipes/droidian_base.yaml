@@ -46,6 +46,6 @@ actions:
 
   - action: apt
     chroot: true
-    description: install droidian-base metapackage
+    description: install furios-base metapackage
     packages:
-      - droidian-base
+      - furios-base
