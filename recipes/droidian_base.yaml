@@ -24,6 +24,7 @@ actions:
     packages:
       - ca-certificates
       - droidian-apt-config
+      - droidian-apt-config-krypton
       - droidian-archive-keyring
       - mobian-droidian-archive-keyring
 
