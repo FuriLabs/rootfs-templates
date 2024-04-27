@@ -25,8 +25,8 @@ actions:
       - ca-certificates
       - droidian-apt-config
       - droidian-apt-config-krypton
-      - droidian-archive-keyring
-      - mobian-droidian-archive-keyring
+      - furios-archive-keyring
+      - mobian-furios-archive-keyring
 
   - action: run
     description: Clean repositories
