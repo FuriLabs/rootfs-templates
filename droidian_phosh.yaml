@@ -45,7 +45,7 @@ actions:
     description: install devtools (nightly)
     packages:
       - furios-devtools
-      - droidian-quirks-regenerate-ssh-keys
+      - furios-quirks-regenerate-ssh-keys
       - adaptation-hybris-devtools
 {{end}}
 
