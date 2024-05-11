@@ -5,9 +5,9 @@
 {{- $variant := or .variant "phone" -}}
 {{- $use_internal_repository := or .use_internal_repository "no" -}}
 
-{{- $username := or .username "droidian" -}}
+{{- $username := or .username "furios" -}}
 {{- $password := or .password "1234" -}}
-{{- $hostname := or .hostname "droidian" -}}
+{{- $hostname := or .hostname "furios" -}}
 
 architecture: {{ $architecture }}
 actions:
