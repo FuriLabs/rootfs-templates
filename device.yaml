@@ -1,6 +1,6 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $suffix := or .suffix "testbuild" -}}
-{{- $image := or .image (printf "droidian-rootfs-api29gsi-%s%s.zip" $architecture $suffix) -}}
+{{- $image := or .image (printf "furios-rootfs-api29gsi-%s%s.tar.zst" $architecture $suffix) -}}
 {{- $output_type :=  or .output_type "rootfs" -}}
 {{- $apilevel := or .apilevel 28 -}}
 {{- $version := or .version "nightly" -}}
@@ -41,7 +41,7 @@ actions:
 {{ if eq $output_type "rootfs" }}
   - action: run
     chroot: false
-    description: Generate flashable zip
+    description: Generate flashable zstd
     script: scripts/genzip.sh {{ $image }}
 {{end}}
 
