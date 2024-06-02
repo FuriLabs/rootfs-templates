@@ -2,7 +2,7 @@
 ROOTFS_PATH=$(find . -maxdepth 1 -mindepth 1 -type d -name .debos-*)/root
 ROOTFS_SIZE=$(du -sm $ROOTFS_PATH | awk '{ print $1 }')
 
-ZIP_NAME=$1
+ZSTD_NAME=$1
 IMG_SIZE=$(( ${ROOTFS_SIZE} + 250 )) # FIXME 250MB contingency
 IMG_MOUNTPOINT=".image"
 
@@ -26,9 +26,21 @@ sync
 echo "umount root image"
 umount $IMG_MOUNTPOINT
 
-# generate flashable zip
-echo "Generating recovery flashable zip"
+DEBIAN_FRONTEND=noninteractive apt-get install -y zstd
+
+# generate flashable zstd
+echo "Generating zstd archive"
 mv rootfs.img android-recovery-flashing-template/data/rootfs.img
-(cd android-recovery-flashing-template ; zip -r9 ../out/$ZIP_NAME * -x .git README.md *placeholder)
+
+rm -rf android-recovery-flashing-template/.git
+rm -rf android-recovery-flashing-template/README.md
+rm -rf android-recovery-flashing-template/*placeholder
+
+(cd android-recovery-flashing-template ; tar -I 'zstd -19' -cvf ./$ZSTD_NAME . ; split -b 1500M ./$ZSTD_NAME ./$ZSTD_NAME.part --verbose ; mv ./${ZSTD_NAME}.part* ../out/ ; ls -lha ../out ; )
+
+echo "current directory $(pwd)"
+ls -lha
+ls -lha ..
+ls -lha ../out
 
 echo "done."
