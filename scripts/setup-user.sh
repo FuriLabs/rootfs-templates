@@ -23,3 +23,4 @@ echo "$USERNAME:$PASSWORD" | chpasswd
 DEBIAN_FRONTEND=noninteractive apt-get install xdg-user-dirs
 
 sudo -u furios xdg-user-dirs-update
+sudo -u furios touch /home/furios/.config/furios-initial-setup-pending
