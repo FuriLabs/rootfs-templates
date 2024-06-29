@@ -17,15 +17,10 @@ actions:
     description: Adding apt overlay
     destination: /
 
-  - action: apt
-    chroot: true
+  - action: run
     description: install apt config
-    update: true
-    packages:
-      - ca-certificates
-      - furios-apt-config
-      - furios-apt-config-krypton
-      - furios-archive-keyring
+    chroot: true
+    script: ../scripts/install-apt-config.sh
 
   - action: run
     description: Clean repositories
