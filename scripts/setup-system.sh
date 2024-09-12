@@ -8,9 +8,6 @@ sed -i -e '/en_US\.UTF-8/s/^# //g' /etc/locale.gen
 locale-gen
 update-locale LANG=en_US.UTF-8
 
-# Change plymouth default theme
-plymouth-set-default-theme mobian
-
 # Load phosh on startup if package is installed
 if [ -f /usr/bin/phosh-session ]; then
     systemctl enable phosh.service
