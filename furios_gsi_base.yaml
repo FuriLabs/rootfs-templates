@@ -1,7 +1,6 @@
 {{- $architecture := or .architecture "arm64" -}}
-{{- $apilevel := or .apilevel "28" -}}
+{{- $apilevel := or .apilevel "32" -}}
 {{- $suite := "trixie" -}}
-{{- $use_internal_repository := or .use_internal_repository "no" -}}
 
 {{- $username := or .username "furios" -}}
 {{- $password := or .password "1234" -}}
@@ -12,11 +11,10 @@ actions:
 
   - action: recipe
     description: Generate base rootfs
-    recipe: recipes/droidian_base.yaml
+    recipe: recipes/furios_base.yaml
     variables:
       architecture: {{ $architecture }}
       suite: {{ $suite }}
-      use_internal_repository: {{ $use_internal_repository }}
 
   - action: apt
     chroot: true
@@ -58,9 +56,3 @@ actions:
     packages:
       - android-system-gsi-{{ $apilevel }}:arm64
 {{end}}
-
-  - action: apt
-    chroot: true
-    description: install package sideload-tools
-    packages:
-      - package-sideload-tools

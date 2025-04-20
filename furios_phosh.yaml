@@ -3,7 +3,6 @@
 {{- $suite := "trixie" -}}
 {{- $version := or .version "nightly" -}}
 {{- $variant := or .variant "phone" -}}
-{{- $use_internal_repository := or .use_internal_repository "no" -}}
 
 {{- $username := or .username "furios" -}}
 {{- $password := or .password "1234" -}}
@@ -14,12 +13,11 @@ actions:
 
   - action: recipe
     description: create rootfs
-    recipe: droidian_gsi_base.yaml
+    recipe: furios_gsi_base.yaml
     variables:
       architecture: {{ $architecture }}
       apilevel: {{ $apilevel }}
       suite: {{ $suite }}
-      use_internal_repository: {{ $use_internal_repository }}
       username: {{ $username }}
       password: {{ $password }}
       hostname: {{ $hostname }}
@@ -56,6 +54,6 @@ actions:
       - furios-extras
 
   - action: run
-    description: clean droidian-phosh
+    description: clean phosh
     chroot: true
     script: scripts/clean-phosh.sh
