@@ -34,18 +34,18 @@ pvcreate ${DEVICE}
 
 # Create LVM volume group
 echo "Creating VG"
-vgcreate droidian "${DEVICE}"
+vgcreate furios "${DEVICE}"
 
 # Create LVs, currently
-# 1) droidian-persistent (32M)
-# 2) droidian-reserved (32M)
-# 3) droidian-rootfs (rest)
+# 1) furios-persistent (32M)
+# 2) furios-reserved (32M)
+# 3) furios-rootfs (rest)
 echo "Creating LVs"
-lvcreate --zero n -L 32M -n droidian-persistent droidian
-lvcreate --zero n -L 32M -n droidian-reserved droidian
-lvcreate --zero n -l 100%FREE -n droidian-rootfs droidian
+lvcreate --zero n -L 32M -n furios-persistent furios
+lvcreate --zero n -L 32M -n furios-reserved furios
+lvcreate --zero n -l 100%FREE -n furios-rootfs furios
 
-vgchange -ay droidian
+vgchange -ay furios
 vgscan --mknodes -v
 
 sleep 5
@@ -60,7 +60,7 @@ sleep 5
 # We workaround that by bind-mounting /dev to /host-dev, so that the host's
 # /dev is still available, but we need to determine the correct path
 # by ourselves
-ROOTFS_VOLUME=$(realpath /dev/mapper/droidian-droidian--rootfs)
+ROOTFS_VOLUME=$(realpath /dev/mapper/furios-furios--rootfs)
 ROOTFS_VOLUME=${ROOTFS_VOLUME/\/dev/\/host-dev}
 
 # Create rootfs filesystem
@@ -87,7 +87,7 @@ echo "umount root image"
 umount ${IMG_MOUNTPOINT}
 
 # clean up
-vgchange -an droidian
+vgchange -an furios
 
 losetup -d ${DEVICE}
 
