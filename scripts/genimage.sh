@@ -2,21 +2,25 @@
 
 set -e
 
+# change to zstd to use zstd instead
+COMPRESSION="zip"
+
 ROOTFS_PATH=$(find ${PWD} -maxdepth 1 -mindepth 1 -type d -name '.debos-*' -printf '%T@ %p\n' | sort -nr | head -n 1 | awk '{ print $2 }')/root
 ROOTFS_SIZE=$(du -sm $ROOTFS_PATH | awk '{ print $1 }')
 
-ZSTD_NAME=${1}
-WORK_DIR=${ZSTD_NAME}.work
+ARCHIVE_NAME=${1}
+WORK_DIR=${ARCHIVE_NAME}.work
 IMG_SIZE=$(( ${ROOTFS_SIZE} + 250 + 32 + 32 )) # FIXME 250MB + 32MB + 32MB contingency
 IMG_MOUNTPOINT=".image"
 
 clean() {
-	rm -rf ${WORK_DIR}
+    rm -rf ${WORK_DIR}
 }
+
 trap clean EXIT
 
-# Crate temporary directory
-mkdir ${ZSTD_NAME}.work
+# Create temporary directory
+mkdir ${ARCHIVE_NAME}.work
 
 # create target base image
 echo "Creating empty image"
@@ -94,8 +98,8 @@ losetup -d ${DEVICE}
 img2simg ${WORK_DIR}/userdata.raw ${WORK_DIR}/userdata.img
 rm -f ${WORK_DIR}/userdata.raw
 
-# Prepare target zstd archive
-echo "Preparing zstd archive"
+# Prepare target archive
+echo "Preparing archive"
 cp -R android-image-flashing-template/template ${WORK_DIR}/target
 mv ${WORK_DIR}/userdata.img ${WORK_DIR}/target/data/userdata.img
 
@@ -120,19 +124,20 @@ if [ -e "${bootimage}" ]; then
 		> ${WORK_DIR}/target/data/device-configuration.conf
 fi
 
-DEBIAN_FRONTEND=noninteractive apt-get install -y zstd
-
 rm -rf ${WORK_DIR}/target/.git
 rm -rf ${WORK_DIR}/target/README.md
 rm -rf ${WORK_DIR}/target/*placeholder
 
-# generate zstd
-echo "Generating zstd archive"
-(cd ${WORK_DIR}/target && tar -I 'zstd -19' -cvf ../../${ZSTD_NAME} . --ignore-failed-read ; echo "Splitting archive ${ZSTD_NAME}" ; split -b 1500M ../../${ZSTD_NAME} ../../${ZSTD_NAME}.part --verbose ; mv ../../${ZSTD_NAME}.part* ../../out/ ; ls -lha ../../out)
+if [ "${COMPRESSION}" == "zstd" ]; then
+    DEBIAN_FRONTEND=noninteractive apt-get install -y zstd
 
-echo "current directory $(pwd)"
-ls -lha
-ls -lha ..
-ls -lha ../out
+    # generate zstd
+    echo "Generating zstd archive"
+    (cd ${WORK_DIR}/target && tar -I 'zstd -19' -cvf ../../${ARCHIVE_NAME} . --ignore-failed-read ; echo "Splitting archive ${ARCHIVE_NAME}" ; split -b 1500M ../../${ARCHIVE_NAME} ../../${ARCHIVE_NAME}.part --verbose ; mv ../../${ARCHIVE_NAME}.part* ../../out/)
+else
+    # generate zip
+    echo "Generating zip"
+    (cd ${WORK_DIR}/target ; zip -r9 ../../out/$ARCHIVE_NAME *)
+fi
 
 echo "done."
