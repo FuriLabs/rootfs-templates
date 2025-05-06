@@ -137,7 +137,7 @@ if [ "${COMPRESSION}" == "zstd" ]; then
 else
     # generate zip
     echo "Generating zip"
-    (cd ${WORK_DIR}/target ; zip -r9 ../../out/$ARCHIVE_NAME *)
+    (cd ${WORK_DIR}/target ; zip -r9 ../../out/$ARCHIVE_NAME * -x .git README.md *placeholder)
 fi
 
 echo "done."
