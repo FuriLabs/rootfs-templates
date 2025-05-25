@@ -6,4 +6,6 @@ if [ -f "/usr/bin/flatpak" ]; then
    flatpak remote-modify --enable flathub
 fi
 
+rm -f /1
+
 exit 0
