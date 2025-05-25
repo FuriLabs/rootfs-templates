@@ -6,7 +6,4 @@ if [ -f "/usr/bin/flatpak" ]; then
    flatpak remote-modify --enable flathub
 fi
 
-# furios-initial-setup needs this
-dpkg-reconfigure furios-quirks-polkit
-
 exit 0
