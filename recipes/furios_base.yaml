@@ -1,5 +1,5 @@
 {{- $architecture := or .architecture "arm64" -}}
-{{- $suite := "trixie" -}}
+{{- $suite := "forky" -}}
 
 architecture: {{ $architecture }}
 actions:

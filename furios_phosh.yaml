@@ -1,6 +1,6 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $apilevel := or .apilevel "28" -}}
-{{- $suite := "trixie" -}}
+{{- $suite := "forky" -}}
 {{- $version := or .version "nightly" -}}
 {{- $variant := or .variant "phone" -}}
 

@@ -1,6 +1,6 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $apilevel := or .apilevel "32" -}}
-{{- $suite := "trixie" -}}
+{{- $suite := "forky" -}}
 
 {{- $username := or .username "furios" -}}
 {{- $password := or .password "1234" -}}
