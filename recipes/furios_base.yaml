@@ -8,7 +8,7 @@ actions:
     suite: {{ $suite }}
     components:
       - main
-    mirror: http://debian.furios.io/
+    mirror: http://debian-staging.furios.io/
     variant: minbase
 
   - action: overlay
