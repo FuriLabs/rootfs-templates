@@ -33,6 +33,15 @@ actions:
 
   - action: apt
     chroot: true
+    description: install glycin
+    packages:
+      - glycin-loaders
+      - glycin-thumbnailers
+      - libglycin-2-0
+      - libgdk-pixbuf-2.0-0
+
+  - action: apt
+    chroot: true
     description: install furios-base metapackage
     packages:
       - furios-base
