@@ -100,7 +100,7 @@ rm -f ${WORK_DIR}/userdata.raw
 
 # Prepare target archive
 echo "Preparing archive"
-cp -R android-image-flashing-template/template ${WORK_DIR}/target
+cp -R image-template ${WORK_DIR}/target
 mv ${WORK_DIR}/userdata.img ${WORK_DIR}/target/data/userdata.img
 
 # Copy kernel and stuff
@@ -124,8 +124,6 @@ if [ -e "${bootimage}" ]; then
 		> ${WORK_DIR}/target/data/device-configuration.conf
 fi
 
-rm -rf ${WORK_DIR}/target/.git
-rm -rf ${WORK_DIR}/target/README.md
 rm -rf ${WORK_DIR}/target/*placeholder
 
 if [ "${COMPRESSION}" == "zstd" ]; then
@@ -137,7 +135,7 @@ if [ "${COMPRESSION}" == "zstd" ]; then
 else
     # generate zip
     echo "Generating zip"
-    (cd ${WORK_DIR}/target ; zip -r9 ../../out/$ARCHIVE_NAME * -x .git README.md *placeholder)
+    (cd ${WORK_DIR}/target ; zip -r9 ../../out/$ARCHIVE_NAME * -x *placeholder)
 fi
 
 echo "done."
