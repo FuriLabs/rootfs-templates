@@ -1,5 +1,6 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $suite := "forky" -}}
+{{- $version := or .version "nightly" -}}
 
 architecture: {{ $architecture }}
 actions:
@@ -25,6 +26,13 @@ actions:
     description: Clean repositories
     chroot: true
     script: ../scripts/clean-bootstrap-repositories.sh
+
+{{ if eq $version "staging" }}
+  - action: run
+    description: install apt config staging
+    chroot: true
+    script: ../scripts/install-apt-config-staging.sh
+{{end}}
 
   - action: run
     description: Build configuration

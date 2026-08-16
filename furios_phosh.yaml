@@ -18,6 +18,7 @@ actions:
       architecture: {{ $architecture }}
       apilevel: {{ $apilevel }}
       suite: {{ $suite }}
+      version: {{ $version }}
       username: {{ $username }}
       password: {{ $password }}
       hostname: {{ $hostname }}
