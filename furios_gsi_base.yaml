@@ -18,11 +18,10 @@ actions:
       suite: {{ $suite }}
       version: {{ $version }}
 
-  - action: apt
+  - action: run
     chroot: true
-    description: install packages
-    packages:
-      - adaptation-hybris-api{{ $apilevel }}
+    description: Install packages
+    script: scripts/install-package.sh adaptation-hybris-api{{ $apilevel }}
 
   - action: run
     description: Set up android base
@@ -52,9 +51,8 @@ actions:
 {{end}}
 
 {{ if ne $architecture "amd64" }}
-  - action: apt
+  - action: run
     chroot: true
-    description: install android GSI
-    packages:
-      - android-system-gsi-{{ $apilevel }}:arm64
-{{end}}
+    description: Install Android GSI
+    script: scripts/install-package.sh android-system-gsi-{{ $apilevel }}:arm64
+{{ end }}

@@ -18,9 +18,9 @@ actions:
     destination: /
 
   - action: run
-    description: install apt config
     chroot: true
-    script: ../scripts/install-apt-config.sh
+    description: Install APT configuration
+    script: ../scripts/install-package.sh ca-certificates furios-apt-config furios-apt-config-sync furios-archive-keyring
 
   - action: run
     description: Clean repositories
@@ -29,27 +29,22 @@ actions:
 
 {{ if eq $version "staging" }}
   - action: run
-    description: install apt config staging
     chroot: true
-    script: ../scripts/install-apt-config-staging.sh
-{{end}}
+    description: Install staging APT configuration
+    script: ../scripts/install-package.sh furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-sync-staging
+{{ end }}
 
   - action: run
     description: Build configuration
     chroot: true
     script: ../scripts/build-configuration.sh configure
 
-  - action: apt
+  - action: run
     chroot: true
-    description: install glycin
-    packages:
-      - glycin-loaders
-      - glycin-thumbnailers
-      - libglycin-2-0
-      - libgdk-pixbuf-2.0-0
+    description: Install glycin
+    script: ../scripts/install-package.sh glycin-loaders glycin-thumbnailers libglycin-2-0 libgdk-pixbuf-2.0-0
 
-  - action: apt
+  - action: run
     chroot: true
-    description: install furios-base metapackage
-    packages:
-      - furios-base
+    description: Install furios-base metapackage
+    script: ../scripts/install-package.sh furios-base

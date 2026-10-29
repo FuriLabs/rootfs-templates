@@ -23,36 +23,29 @@ actions:
       password: {{ $password }}
       hostname: {{ $hostname }}
 
-  - action: apt
+  - action: run
     chroot: true
-    description: install furios-phosh
-    packages:
-      - furios-phosh-full
+    description: Install furios-phosh
+    script: scripts/install-package.sh furios-phosh-full
 
 {{ if eq $variant "phone" }}
-  - action: apt
+  - action: run
     chroot: true
-    description: install packages for the phone variant
-    packages:
-      - adaptation-hybris-api{{ $apilevel }}-phone
-      - furios-phosh-phone
-{{end}}
+    description: Install packages for the phone variant
+    script: scripts/install-package.sh adaptation-hybris-api{{ $apilevel }}-phone furios-phosh-phone
+{{ end }}
 
 {{ if eq $version "nightly" }}
-  - action: apt
+  - action: run
     chroot: true
-    description: install devtools (nightly)
-    packages:
-      - furios-devtools
-      - furios-quirks-regenerate-ssh-keys
-      - adaptation-hybris-devtools
-{{end}}
+    description: Install devtools (nightly)
+    script: scripts/install-package.sh furios-devtools furios-quirks-regenerate-ssh-keys adaptation-hybris-devtools
+{{ end }}
 
-  - action: apt
+  - action: run
     chroot: true
-    description: install furios-extras
-    packages:
-      - furios-extras
+    description: Install furios-extras
+    script: scripts/install-package.sh furios-extras
 
   - action: run
     description: clean phosh
